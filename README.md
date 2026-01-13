@@ -1,4 +1,4 @@
-# Virtual-Soc-Threat-Detection
+# Virtual SOC – Red Team vs Blue Team Simulation
 
 ## Overview
 This project simulates a small enterprise Security Operations Center (SOC) environment.
