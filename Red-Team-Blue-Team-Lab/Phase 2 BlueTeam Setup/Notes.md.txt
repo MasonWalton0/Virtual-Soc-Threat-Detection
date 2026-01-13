@@ -1,0 +1,75 @@
+Phase 2: Blue Team Setup (Monitoring & Visibility)
+##Objective
+Configure the Wazuh SIEM to collect logs from monitored systems and provide visibility into system activity for threat detection.
+
+
+##Tools Used
+Wazuh Manager & Dashboard (Ubuntu Linux)
+Wazuh Agent
+Windows 11 Virtual Machine
+VirtualBox (Internal Network)
+
+
+##Setup Description
+The goal of Phase 2 is to establish centralized logging and monitoring.
+In this phase:
+The Windows 10 system acts as the endpoint (victim)
+The Wazuh machine acts as the Security Operations Center (SOC)
+Logs are forwarded from Windows to Wazuh for analysis
+This allows the Blue Team to detect suspicious behavior during simulated attacks.
+
+
+##Steps Performed
+Installed the Wazuh Agent on the Windows 10 VM
+Registered the Windows agent with the Wazuh Manager
+Verified the agent was active and connected
+Confirmed log ingestion in the Wazuh Dashboard
+
+
+##Verification Performed
+In the Wazuh Dashboard:
+Navigated to Agents
+Confirmed Windows agent status = Active
+Checked Security Events / Threat Hunting
+Verified Windows logs were visible
+
+
+##Expected Outcome
+Windows system logs collected
+Authentication and system events visible
+Endpoint successfully monitored by the SOC
+
+
+##Blue Team Capability Gained
+The Blue Team can now:
+Monitor Windows system activity
+Detect suspicious processes and behavior
+Correlate events across machines
+Generate alerts for abnormal activity
+This completes the foundational monitoring layer needed for threat detection.
+
+
+@Screenshots to Capture
+Wazuh Virtual machine ip address
+Showing that it can be showed/seen
+Filename: wazuh-ip
+
+Wazuh Agent being installed
+Shows that it was downloaded and can be used
+Filename: Wazuh Agent Installed Windows11
+
+The dashboard of the wazuh page
+Shows that wazuh has been logged in correctly
+Filename: Wazuh Dashboard
+
+Status page of the wazuh dashboard
+showing it first opened up
+Filename: Status Page
+
+Wazuh Agent Active
+Shows Windows agent status as Active
+Filename: Wazuh Agent Deploy Windows Active
+
+Windows Logs Visible in Wazuh
+Security or system events displayed
+Filename: Windows Logs Visible

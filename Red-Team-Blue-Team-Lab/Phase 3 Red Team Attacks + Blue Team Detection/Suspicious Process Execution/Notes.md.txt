@@ -1,0 +1,39 @@
+Attack 3: Suspicious Process Execution (Windows)
+##Objective
+Simulate abnormal process behavior on a Windows system.
+
+
+##Tools Used
+Windows Command Prompt (Admin)
+PowerShell
+
+
+##Attack Description
+Attackers frequently spawn multiple processes during malware execution or scripting activity.
+This simulation repeatedly launches a benign process to generate suspicious behavior patterns.
+
+
+##Command Executed (Windows 11)
+powershell -Command "Start-Process notepad.exe"
+(Repeated several times)
+
+
+##Expected Outcome
+Multiple process creation events
+Logged by Windows Event Logs
+Forwarded to Wazuh SIEM
+
+
+##Blue Team Detection
+Wazuh detects:
+Excessive process creation
+Abnormal execution patterns
+Potential malware behavior indicators
+
+
+##Screenshot to Capture
+Multiple Notepad windows open
+Filename: Suspicious Process Windows
+
+Wazuh alerts to this
+Filename: Wazuh Process Alert

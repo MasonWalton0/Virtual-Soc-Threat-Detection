@@ -1,0 +1,111 @@
+Phase 1: Lab Setup – Network Connectivity (Red + Blue Teams)
+
+##Objective
+Establish a controlled virtual lab environment where Red Team and Blue Team machines can communicate with each other for attack simulation and detection.
+
+
+##Tools Used
+Oracle VirtualBox
+Ubuntu Linux VM (Red Team – Attacker)
+Windows 11 VM (Victim)
+Wazuh VM (Blue Team – SIEM)
+Internal Network (VirtualBox)
+
+
+##Lab Description
+A foundational step in any cybersecurity lab is ensuring all systems can communicate on the same isolated network. This phase sets up three virtual machines on an Internal Network in VirtualBox to simulate a small enterprise environment.
+Successful connectivity allows attacks to be launched from the Red Team machine and monitored by the Blue Team SIEM.
+
+
+##Configuration Steps
+Virtual Machines Created:
+Ubuntu Linux → Red Team (Attacker)
+Windows 11 → Target/Victim
+Wazuh → Blue Team SIEM
+Network Configuration (All VMs):
+Network Adapter: Internal Network
+Same internal network name applied to all machines
+
+
+##Verification Commands Executed
+Windows 11 (Command Prompt):
+ipconfig
+ping <Ubuntu-IP>
+ping <Wazuh-IP>
+
+
+Ubuntu Linux (Terminal):
+ip a
+ping <Windows-IP>
+ping <Wazuh-IP>
+
+
+Wazuh VM (Terminal):
+ip a
+ping <Windows-IP>
+ping <Ubuntu-IP>
+
+
+##Expected Outcome
+All machines successfully respond to ICMP ping requests
+No packet loss
+Stable communication across the internal network
+
+
+##Result
+✅ All three virtual machines can successfully ping each other
+✅ Network communication confirmed
+✅ Lab environment ready for attack simulations and monitoring
+
+
+##Blue Team Relevance
+This phase ensures the SIEM (Wazuh) can receive logs and network data from target machines once attacks are launched. Without proper connectivity, detection and alerting would not be possible.
+
+
+##Screenshots to Capture
+VirtualBox Main Screen
+Shows Oracle VirtualBox being abled to be opened and used
+Filename: VirtualBox Main screen
+
+
+Virtual Machines
+all 3 virtual machines being made and visible
+Filename: all 3 vms visible
+
+
+VirtualBox Network Settings
+Show each VM set to Internal Network
+Filename: internal-network
+
+
+Windows 11 VM ip
+Shows the ip of the VM in the terminal
+Filename: windows-ip
+
+
+Ubuntu(Attacker) VM ip
+Shows the ip of the VM in the terminal
+Filename: ubuntu-ip 
+
+
+Wazuh VM ip
+Shows the ip of the VM in the terminal
+Filename: wazuh-ip
+
+
+Successful Ping from Windows 11
+Ping Ubuntu and Wazuh
+Filename: windows-success-ping
+
+Successful Ping from Ubuntu
+Ping Windows and Wazuh
+Filename: ubuntu-success-ping
+
+
+Successful Ping from Wazuh
+Ping Windows and Ubuntu
+Filename: wazuh-success-ping
+
+wazuh login
+shows that the wazuh being able to be opened to the login page
+Filename: Wazuh login screen

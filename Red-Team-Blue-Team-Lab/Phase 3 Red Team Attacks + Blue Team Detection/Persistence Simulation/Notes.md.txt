@@ -1,0 +1,78 @@
+Attack 4: Persistence Simulation (Registry Run Key)
+##Objective
+Simulate how attackers maintain persistence on a compromised Windows system by creating a startup registry entry, and observe how this activity is detected by the Wazuh SIEM.
+
+
+##Tools Used
+Windows 11 Virtual Machine (Victim)
+Windows Command Prompt (Administrator)
+Wazuh SIEM
+Sysmon (for enhanced logging)
+
+
+##Attack Description
+After initial access, attackers often attempt to maintain persistence so their malicious code continues running even after a system reboot.
+One common real-world persistence technique is modifying Windows Registry Run keys, which allow programs to execute automatically when a user logs in.
+In this simulation, a safe and non-malicious persistence mechanism was created using Notepad as a stand-in payload. This action generates registry modification logs that can be detected and analyzed by the SOC.
+
+
+##Persistence Technique Simulated
+Registry Run Key (Startup Persistence)
+Technique does not provide remote access
+Used only to simulate attacker behavior
+Safe for lab environments
+
+
+##Command Executed (Windows Victim)
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v UpdateService /t REG_SZ /d "C:\Windows\System32\notepad.exe"
+
+
+##What This Command Does
+Adds a startup entry to the current user’s Run key
+Causes Notepad to execute on user login
+Simulates a malicious payload persisting after reboot
+Triggers registry modification events captured by Sysmon and forwarded to Wazuh
+
+
+##Verification Command (Windows Victim)
+reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Run"
+This confirms that the persistence entry was successfully created.
+
+
+##Expected Outcome
+A new registry value named UpdateService is added
+Windows generates registry modification logs
+Sysmon captures the registry activity
+Wazuh receives and indexes the event
+Persistence-related alerts become visible in the SIEM
+
+
+##Blue Team Detection
+Wazuh detects:
+Registry key modification activity
+Startup persistence behavior
+Indicators related to Windows autorun mechanisms
+Potential persistence techniques mapped to MITRE ATT&CK
+
+
+##Screenshots to Capture
+Windows Command Prompt showing successful registry addition
+Filename: Persistence Registry Command
+
+Registry query output showing UpdateService entry
+Filename: Persistence Registry Verified
+
+Wazuh event showing registry modification detection
+Filename: Wazuh Persistence Detected
+
+
+##Cleanup (Post-Attack Remediation)
+To demonstrate proper SOC hygiene and remediation, the persistence entry was removed after detection.
+Cleanup Command (Windows Victim)
+reg delete "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v UpdateService /f
+
+##Cleanup Verification
+Registry persistence entry removed
+System returned to a clean state
+No startup artifacts remain
+Screenshot to Capture: Persistence Removed

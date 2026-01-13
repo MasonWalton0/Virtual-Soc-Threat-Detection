@@ -1,0 +1,95 @@
+###Project Context
+This document covers a critical troubleshooting and recovery scenario encountered during the Red Team vs Blue Team SOC Lab project. While validating custom detection rules in Wazuh, the Wazuh Manager and API failed due to invalid rule syntax, causing the dashboard to become inaccessible. This document demonstrates the incident, diagnosis, recovery steps, and validation, mirroring real-world SOC operations.
+
+
+###Incident Summary
+Symptoms observed:
+wazuh-manager.service failed with exit-code
+Wazuh Dashboard error: [API connection] No API available to connect
+
+Rule validation failed using: /var/ossec/bin/wazuh-analysisd -t
+
+Error messages included:
+	Invalid root element "rule". Only "group" is allowed
+	Invalid root element "ruleset". Only "group" is allowed
+	Group 'group' without any rule
+
+Impact:
+Wazuh Manager could not start
+API unavailable
+SOC Dashboard offline
+
+
+###Root Cause Analysis
+The failure was caused by invalid XML structure inside: /var/ossec/etc/rules/local_rules.xml
+
+Key findings:
+Wazuh rules must NOT use <ruleset> as a root element
+The only valid root-level structure is <group>
+A malformed or empty rule group prevents:
+	analysisd
+	wazuh-manager
+	wazuh-api
+	Dashboard connectivity
+
+This mimics real SOC outages caused by misconfigured detection content.
+
+
+###Recovery Strategy (Factory Reset of Rules)
+To ensure a stable and production-safe recovery, a full ruleset reset was performed.
+
+##Step 1 — Stop Wazuh Manager
+sudo systemctl stop wazuh-manager
+
+##Step 2 — Remove All Local Rule Files
+sudo rm -f /var/ossec/etc/rules/local_rules.xml
+sudo rm -f /var/ossec/etc/rules/*.xml
+
+##Step 3 — Restore Default Wazuh Rules
+sudo cp -r /var/ossec/ruleset/rules /var/ossec/etc/
+This restores the official Wazuh rule set shipped with the platform.
+
+##Step 4 — Fix File Ownership
+sudo chown -R wazuh:wazuh /var/ossec/etc/rules
+
+##Step 5 — Validate Rules (Critical Validation)
+sudo /var/ossec/bin/wazuh-analysisd -t
+
+Expected Output: INFO: Ruleset test passed.
+
+##Step 6 — Restart Wazuh Manager
+sudo systemctl start wazuh-manager
+systemctl status wazuh-manager
+
+Status: Active: active (running)
+
+##Step 7 — Restore Dashboard Connectivity
+sudo systemctl restart wazuh-dashboard
+
+Result:
+	API connection restored
+	Dashboard operational
+
+
+
+###Outcome & Validation
+Wazuh Manager operational
+API connection restored
+Default detection rules loaded
+SOC Dashboard fully functional
+
+This recovery demonstrates:
+Change control discipline
+Detection engineering troubleshooting
+SOC resilience and recovery workflows
+
+
+###Lessons Learned (SOC Best Practices)
+
+Always validate rules before restarting services
+
+Add custom rules one at a time
+
+Never deploy untested XML in production
+
+Broken detection content can cause full SOC outages

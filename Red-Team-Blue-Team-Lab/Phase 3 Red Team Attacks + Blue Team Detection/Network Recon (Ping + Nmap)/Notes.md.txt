@@ -1,0 +1,44 @@
+Attack 1: Network Reconnaissance (Nmap Scan)
+##Objective
+Simulate how attackers discover open ports and services on a target system.
+
+
+##Tools Used
+Nmap (installed via Snap)
+
+
+##Attack Description
+Attackers often begin with reconnaissance to identify exposed services that could be exploited.
+In this step, I performed a TCP scan against the Windows 10 victim machine.
+
+
+##Command Executed (Ubuntu Attacker)
+nmap -A 192.168.56.101
+nmap -Pn 192.168.56.101
+
+
+##Expected Outcome
+Open ports discovered on the Windows machine
+Network scan activity logged by the Windows host
+Events forwarded to Wazuh SIEM
+
+
+##Blue Team Detection
+Wazuh detects:
+Port scanning behavior
+Suspicious inbound connection attempts
+Network reconnaissance indicators
+
+
+##Screenshot to Capture
+Ubuntu Terminal showing ip address
+Filename: Attacker IP
+
+Ubuntu attacker pinging the windows it is attacking
+Filename: Ping Windows
+
+Terminal showing Nmap scan results
+Filename: Nmap Scan
+
+Wazuh alerts to this
+Filename: Wazuh Nmap Alert

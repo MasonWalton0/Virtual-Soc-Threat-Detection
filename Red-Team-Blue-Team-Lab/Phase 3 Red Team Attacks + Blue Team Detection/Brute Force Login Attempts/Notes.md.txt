@@ -1,0 +1,37 @@
+Attack 2: Failed Login Attempts (Brute-Force Simulation)
+##Objective
+Simulate unauthorized access attempts by having multiple failed login attempts.
+
+
+##Tools Used
+Windows virtual machine
+Windows virtual machine terminal/command prompt
+
+
+##Attack Description
+Repeated failed authentication attempts are a common sign of brute-force attacks.
+
+
+##Action Performed
+Entered incorrect passwords multiple times on windows command prompt
+using runas /user:fakeuser cmd multiple times
+
+
+##Expected Outcome
+Failed login events generated
+Security logs forwarded to Wazuh
+
+
+##Blue Team Detection
+Wazuh detects:
+Multiple authentication failures
+Brute-force attack patterns
+Account abuse attempts
+
+
+##Screenshot to Capture
+Brute Force attempts in windows VM terminal
+Filename: Windows Brute Attempt
+
+Wazuh alert showing failed login attempts
+Filename: Wazuh BruteForce Alert
